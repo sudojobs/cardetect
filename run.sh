@@ -2,11 +2,11 @@
 HOST='ftp.shobhitk.uwebweb.com'
 USER='shobhitk'
 PASSWD='cardetect'
-lastoutput ='xyz'
+LASTOUTPUT=''
 
 while :
 do
-        python3 motione.py
+        ./motione.py &
         output="$(ls -t ./images|head -n1 )"
 if [ "$output" != "$lastoutput" ]; then 
         echo "images/${output}"
@@ -24,7 +24,7 @@ put ./output/${txtfile}
 quit
 END_SCRIPT
 fi
-lastoutput=$output
+LASTOUTPUT=$output
 	echo "Press [CTRL+C] to stop..Image Capture and Processing Working"
 	sleep 1
 done
