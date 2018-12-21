@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # original script by brainflakes, improved by pageauc, peewee2 and Kesthal
 # www.raspberrypi.org/phpBB3/viewtopic.php?f=43&t=45235
 
@@ -31,13 +29,13 @@ diskSpaceToReserve = 40 * 1024 * 1024 # Keep 40 mb free on disk
 cameraSettings = ""
 
 # settings of the photos to save
-saveWidth   = 1296
-saveHeight  = 972
-saveQuality = 15 # Set jpeg quality (0 to 100)
+saveWidth   = 416
+saveHeight  = 234
+saveQuality = 25 # Set jpeg quality (0 to 100)
 
 # Test-Image settings
-testWidth = 100
-testHeight = 75
+testWidth = 416
+testHeight = 234
 
 # this is the default setting, if the whole image should be scanned for changed pixel
 testAreaCount = 1
@@ -82,7 +80,7 @@ def saveImage(settings, width, height, quality, diskSpaceToReserve):
     time = datetime.now()
     filename = filepath + "/" + filenamePrefix + "-%04d%02d%02d-%02d%02d%02d.jpg" % (time.year, time.month, time.day, time.hour, time.minute, time.second)
     subprocess.call("raspistill %s -w %s -h %s -t 200 -e jpg -q %s -n -o %s" % (settings, width, height, quality, filename), shell=True)
-    print "Captured %s" % filename
+    print ("Captured %s" % filename)
 
 # Keep free space above given level
 def keepDiskSpaceFree(bytesToReserve):
@@ -90,7 +88,7 @@ def keepDiskSpaceFree(bytesToReserve):
         for filename in sorted(os.listdir(filepath + "/")):
             if filename.startswith(filenamePrefix) and filename.endswith(".jpg"):
                 os.remove(filepath + "/" + filename)
-                print "Deleted %s/%s to avoid filling disk" % (filepath,filename)
+                print ("Deleted %s/%s to avoid filling disk" % (filepath,filename))
                 if (getFreeSpace() > bytesToReserve):
                     return
 
@@ -145,9 +143,9 @@ while (True):
 
     if (debugMode):
         debugimage.save(filepath + "/debug.bmp") # save debug image as bmp
-        print "debug.bmp saved, %s changed pixel" % changedPixels
+        print ("debug.bmp saved, %s changed pixel" % changedPixels)
     # else:
-    #     print "%s changed pixel" % changedPixels
+    #     print ("%s changed pixel" % changedPixels)
 
     # Check force capture
     if forceCapture:
